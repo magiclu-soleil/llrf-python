@@ -12,8 +12,8 @@ int32_t IQ_phase_shift(double phase) {
 	cos_angle = (pow(2.0, 15.0)-1)*cos(phase*PI/ 180.0 );
 	sin_angle = (pow(2.0, 15.0)-1)*sin( phase * PI / 180.0 );
 
-	printf(" cos_angle= %d ",cos_angle);
-    printf(" sin_angle= %d ",sin_angle);
+	/*printf(" cos_angle= %d ",cos_angle);
+    printf(" sin_angle= %d ",sin_angle);*/
 
 	return  (cos_angle << 16 | (sin_angle & 0xffff));
 }
