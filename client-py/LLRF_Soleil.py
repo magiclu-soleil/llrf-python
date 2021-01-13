@@ -506,7 +506,6 @@ class llrf_graph_window(QtWidgets.QMainWindow):
             self.ui_ch0_phi.setText(str(round(phi, n_bit)))
 
             [amp, phi] = self.calc_amp_phase(self.buf_q[0], self.buf_i[0], 1) # calc amp and phase std
-            print(np.std(amp)/amp_m)
             self.ui_ch0_amp_std.setText(str(round(np.std(amp)/amp_m, n_bit)))
             self.ui_ch0_phi_std.setText(str(round(np.std(phi), n_bit)))
 
