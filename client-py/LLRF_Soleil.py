@@ -19,7 +19,7 @@ import xlrd
 from ctypes import *
 import ctypes
 t = 0  # write/read config from line 0
-
+n_bit = 4
 class llrf_graph_window(QtWidgets.QMainWindow):
     def __init__(self, *args, **kwargs):
         super(llrf_graph_window, self).__init__(*args, **kwargs)
@@ -475,6 +475,18 @@ class llrf_graph_window(QtWidgets.QMainWindow):
         self.timer.stop()
         self.clear_plot()
 
+    def calc_amp_phase(self, Q, I,flag):
+        amp=[]
+        phi=[]
+        if flag ==1:
+            for q, i in zip(Q, I):
+                amp.append(math.sqrt(np.square(q) + np.square(i)))
+                phi.append(math.degrees(math.atan(q/i)))
+        else:
+            amp = math.sqrt(np.square(Q) + np.square(I))
+            phi = math.degrees(math.atan(Q/I))
+
+        return [amp, phi]
 
     def update_graph(self):
         self.clear_plot()
@@ -485,18 +497,18 @@ class llrf_graph_window(QtWidgets.QMainWindow):
             self.curve_i.setPos(len(self.buf_i[0]), 0)
 
             n = min(len(self.buf_q[0]), len(self.buf_i[0]))
-            #self.plt_ch0.plot(self.buf_i[0][0:n], self.buf_q[0][0:n])
             self.ch0_scatter.setData(self.buf_i[0][0:n], self.buf_q[0][0:n])
             self.I_moy0 = np.mean(self.buf_i[0])
             self.Q_moy0 = np.mean(self.buf_q[0])
-            amp = math.sqrt(np.square(self.I_moy0)+np.square(self.Q_moy0))
-            try:
-                phi = math.atan(self.Q_moy0/self.I_moy0)
-                phi = math.degrees(phi)
-            except RuntimeWarning:
-                print('No')
-            self.ui_ch0_amp.setText(str(round(amp,2)))
-            self.ui_ch0_phi.setText(str(round(phi,4)))
+
+            [amp_m, phi] =self.calc_amp_phase(self.Q_moy0, self.I_moy0, 0)   # calc amp and phase RMS
+            self.ui_ch0_amp.setText(str(round(amp_m, 2)))
+            self.ui_ch0_phi.setText(str(round(phi, n_bit)))
+
+            [amp, phi] = self.calc_amp_phase(self.buf_q[0], self.buf_i[0], 1) # calc amp and phase std
+            print(np.std(amp)/amp_m)
+            self.ui_ch0_amp_std.setText(str(round(np.std(amp)/amp_m, n_bit)))
+            self.ui_ch0_phi_std.setText(str(round(np.std(phi), n_bit)))
 
         if self.bram1.isChecked():
             self.curve_q1.setData(self.buf_q[1])
@@ -511,6 +523,14 @@ class llrf_graph_window(QtWidgets.QMainWindow):
             self.I_moy1 = np.mean(self.buf_i[1])
             self.Q_moy1 = np.mean(self.buf_q[1])
 
+            [amp_m, phi] =self.calc_amp_phase(self.Q_moy1, self.I_moy1, 0)   # calc amp and phase RMS
+            self.ui_ch1_amp.setText(str(round(amp_m, 2)))
+            self.ui_ch1_phi.setText(str(round(phi, n_bit)))
+
+            [amp, phi] = self.calc_amp_phase(self.buf_q[1], self.buf_i[1], 1) # calc amp and phase std
+            self.ui_ch1_amp_std.setText(str(round(np.std(amp)/amp_m, n_bit)))
+            self.ui_ch1_phi_std.setText(str(round(np.std(phi), n_bit)))
+
         if self.bram2.isChecked():
             self.curve_q2.setData(self.buf_q[2])
             self.curve_i2.setData(self.buf_i[2])
@@ -523,18 +543,36 @@ class llrf_graph_window(QtWidgets.QMainWindow):
             self.I_moy2 = np.mean(self.buf_i[2])
             self.Q_moy2 = np.mean(self.buf_q[2])
 
+            [amp_m, phi] =self.calc_amp_phase(self.Q_moy0, self.I_moy0, 0)   # calc amp and phase RMS
+            self.ui_ch2_amp.setText(str(round(amp_m, 2)))
+            self.ui_ch2_phi.setText(str(round(phi, n_bit)))
+
+            [amp, phi] = self.calc_amp_phase(self.buf_q[2], self.buf_i[2], 1) # calc amp and phase std
+            self.ui_ch2_amp_std.setText(str(round(np.std(amp)/amp_m, n_bit)))
+            self.ui_ch2_phi_std.setText(str(round(np.std(phi), n_bit)))
+
+            '''
+            plot for bram 3
+            '''
         if self.bram3.isChecked():
             self.curve_q3.setData(self.buf_q[3])
             self.curve_i3.setData(self.buf_i[3])
             self.curve_q3.setPos(len(self.buf_q[3]), 0)
             self.curve_i3.setPos(len(self.buf_i[3]), 0)
 
-
             n = min(len(self.buf_q[3]), len(self.buf_i[3]))
             #self.plt_ch0.plot(self.buf_i[0][0:n], self.buf_q[0][0:n])
             self.ch3_scatter.setData(self.buf_i[3][0:n], self.buf_q[3][0:n])
             self.I_moy3 = np.mean(self.buf_i[3])
             self.Q_moy3 = np.mean(self.buf_q[3])
+
+            [amp_m, phi] = self.calc_amp_phase(self.Q_moy3, self.I_moy3, 0)  # calc amp and phase RMS
+            self.ui_ch3_amp.setText(str(round(amp_m, 2)))
+            self.ui_ch3_phi.setText(str(round(phi, n_bit)))
+
+            [amp, phi] = self.calc_amp_phase(self.buf_q[3], self.buf_i[3], 1)  # calc amp and phase std
+            self.ui_ch3_amp_std.setText(str(round(np.std(amp)/amp_m, n_bit)))
+            self.ui_ch3_phi_std.setText(str(round(np.std(phi), n_bit)))
 
 
     def trig1_data(self):
