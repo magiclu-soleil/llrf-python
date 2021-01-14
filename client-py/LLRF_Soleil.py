@@ -542,7 +542,7 @@ class llrf_graph_window(QtWidgets.QMainWindow):
             self.I_moy2 = np.mean(self.buf_i[2])
             self.Q_moy2 = np.mean(self.buf_q[2])
 
-            [amp_m, phi] =self.calc_amp_phase(self.Q_moy0, self.I_moy0, 0)   # calc amp and phase RMS
+            [amp_m, phi] =self.calc_amp_phase(self.Q_moy2, self.I_moy2, 0)   # calc amp and phase RMS
             self.ui_ch2_amp.setText(str(round(amp_m, 2)))
             self.ui_ch2_phi.setText(str(round(phi, n_bit)))
 
