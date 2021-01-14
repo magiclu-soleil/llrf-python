@@ -481,10 +481,10 @@ class llrf_graph_window(QtWidgets.QMainWindow):
         if flag ==1:
             for q, i in zip(Q, I):
                 amp.append(math.sqrt(np.square(q) + np.square(i)))
-                phi.append(math.degrees(math.atan(q/i)))
+                phi.append(math.degrees(math.atan2(q,i)))
         else:
             amp = math.sqrt(np.square(Q) + np.square(I))
-            phi = math.degrees(math.atan(Q/I))
+            phi = math.degrees(math.atan2(Q,I))
 
         return [amp, phi]
 
