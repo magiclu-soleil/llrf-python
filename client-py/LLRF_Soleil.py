@@ -20,6 +20,10 @@ from ctypes import *
 import ctypes
 t = 0  # write/read config from line 0
 n_bit = 4
+
+# for git token
+#  69573290c9e93f4c07ed1b878308ce9bd3a3b418
+
 class llrf_graph_window(QtWidgets.QMainWindow):
     def __init__(self, *args, **kwargs):
         super(llrf_graph_window, self).__init__(*args, **kwargs)
