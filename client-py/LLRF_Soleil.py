@@ -198,7 +198,6 @@ class llrf_graph_window(QtWidgets.QMainWindow):
         self.last_ch1_ph = self.ui_ph1_deg.text()
         self.last_ch2_ph = self.ui_ph2_deg.text()
         self.last_ch3_ph = self.ui_ph3_deg.text()
-
     def format_str(self, str):
         i = 0
         index_addr = str.count('') + 1
@@ -254,8 +253,6 @@ class llrf_graph_window(QtWidgets.QMainWindow):
         # print('Update channel' + str(ch) + 'phase offset')
         self.update_msg('Now, you are right, the phase updated!!')
 
-
-
     def user_mode(self):
         '''
         self.bram0_addr.hide()
@@ -280,10 +277,13 @@ class llrf_graph_window(QtWidgets.QMainWindow):
             circle = pg.QtGui.QGraphicsEllipseItem(-r, -r, r * 2, r * 2)
             circle.setPen(pg.mkPen(0.2))
             plot.addItem(circle)
+            plot.addLine(x=0,pen='r')
+            plot.addLine(y=0,pen='r')
     def set_plot_ui(self):
         self.max_range = 32000
         self.plt_data = self.rtplot.addPlot(
             labels={'left': 'Level', 'bottom': 'data points'})  # change here for plt_i in seperated plot
+
         self.plt_ch0= self.plt_ch0_iq.addPlot()
         self.plt_ch0.setXRange(-self.max_range, self.max_range, padding=0)
         self.plt_ch0.setYRange(-self.max_range, self.max_range, padding=0)
@@ -348,15 +348,13 @@ class llrf_graph_window(QtWidgets.QMainWindow):
         self.ch3_scatter = self.plt_ch3.plot(self.buf_i[3][0:n], self.buf_q[3][0:n], pen=None, symbol='o', symbolPen = 'y')
         self.ch3_scatter.setSymbolSize(sympole_s)
         self.polar_plot(self.plt_ch3)
-        '''
-        try:
-            self.ui_ph0_deg.returnPressed.connect(self.check_val(0))
-            self.ui_ph1_deg.returnPressed.connect(self.check_val(1))
-            self.ui_ph2_deg.returnPressed.connect(self.check_val(2))
-            self.ui_ph3_deg.returnPressed.connect(self.check_val(3))
-        except TypeError:
-            pass
-        '''
+
+        self.ui_ph0_deg.returnPressed.connect(self.check_val)
+        self.ui_ph1_deg.returnPressed.connect(self.check_val)
+        self.ui_ph2_deg.returnPressed.connect(self.check_val)
+        self.ui_ph3_deg.returnPressed.connect(self.check_val)
+
+
     def check_val(self):
         if (self.last_ch0_ph != self.ui_ph0_deg.text()) & (self.ui_ph0_deg.text()!=''):
             self.calc_phase_angle(0)
@@ -388,7 +386,7 @@ class llrf_graph_window(QtWidgets.QMainWindow):
     def update_plot(self):
         self.timer.timeout.connect(self.get_data)
         self.timer.timeout.connect(self.update_graph)
-        self.timer.timeout.connect(self.check_val)
+        #self.timer.timeout.connect(self.check_val)    ## check and update phase at each refresh
         self.timer.timeout.connect(self.update_refresh_time)
         self.timer.start()
     def start_acq(self):
