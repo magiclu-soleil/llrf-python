@@ -247,7 +247,7 @@ class llrf_graph_window(QtWidgets.QMainWindow):
             phase = self.ui_ph3_deg.text()
             addr = self.ui_ph3_add.text()
 
-        ph = int(phase)
+        ph = np.float(phase)
         self.mysocket.send(b"2")
         ph = c_double(ph)
         phase_angle = self.phase_set.IQ_phase_shift(ph)
@@ -270,7 +270,7 @@ class llrf_graph_window(QtWidgets.QMainWindow):
         self.trig_addr.hide()
         self.data_offset.hide()
         '''
-        self.button_phase.hide()
+#        self.button_phase.hide()
         self.button_init.hide()
         self.button_start.hide()
         self.button_stop.hide()
@@ -419,7 +419,7 @@ class llrf_graph_window(QtWidgets.QMainWindow):
 
     def get_data(self):
         self.mysocket.send(b"1")
-        self.tmp_bram = [None] * 8
+        self.tmp_bram = [None] * self.nbr_bram * 2
         i = 0
         while 1:
             msgServeur = self.mysocket.recv(4096)
