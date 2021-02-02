@@ -338,7 +338,7 @@ class llrf_graph_window(QtWidgets.QMainWindow):
         self.plt_curve_i = [0]*self.nbr_bram
         self.plt_scatter = [0]*4
         pen=[0]*self.nbr_bram*2
-        color_line =['g','b','r','y','k',(255,165,0),(128,0,128),'b']
+        color_line =['g','b','r','y','k',(180,165,0),(128,0,128),'b']
         #**********************************************#
 
         k=0
