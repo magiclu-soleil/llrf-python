@@ -316,14 +316,26 @@ class llrf_graph_window(QtWidgets.QMainWindow):
         self.bram1.setChecked(1)
         self.bram2.setChecked(1)
         self.bram3.setChecked(1)
+    def fft_data(self,ch, iq):
+
+        if iq == 'q':
+            n=len(self.fft_q[ch])
+            fft_q = self.fft_q[ch].np.astype(int)
+            nfft = abs(fft_q[range(int(n/2)/(n))])
+            print(nfft)
+        else:
+            n=len(self.fft_i[ch])
+            fft_i = int(self.fft_i[ch])
+            nfft = abs(fft_i[range(int(n/2)/(n))])
+        return nfft
     def first_plot(self):
         line_w = 2
         sympole_s = 5
     #################################
         pen = pg.mkPen(color='g', width=line_w, style=QtCore.Qt.DashLine)
-        #self.curve_q = self.plt_data.plot(self.fft_q[0], pen='g')
-        #self.curve_i = self.plt_data.plot(self.fft_i[0], pen=pen)
-
+        #self.curve_q = self.plt_data.plot(self.fft_data(0,'q'), pen='g')
+        #self.curve_i = self.plt_data.plot(self.fft_data(0,'i'), pen=pen)
+        print(self.fft_q[0])
         self.curve_q = self.plt_data.plot(self.buf_q[0], pen='g')
         self.curve_i = self.plt_data.plot(self.buf_i[0], pen=pen)
 
@@ -523,8 +535,8 @@ class llrf_graph_window(QtWidgets.QMainWindow):
     def update_graph(self):
         self.clear_plot()
         if self.bram0.isChecked():
-            #self.curve_q.setData(self.fft_q0)
-            #self.curve_i.setData(self.fft_i0)
+            self.curve_q.setData(self.buf_q[0])
+            self.curve_i.setData(self.buf_i[0])
             self.curve_q.setPos(len(self.buf_q[0]), 0)
             self.curve_i.setPos(len(self.buf_i[0]), 0)
 
