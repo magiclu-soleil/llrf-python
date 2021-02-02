@@ -210,7 +210,6 @@ class llrf_graph_window(QtWidgets.QMainWindow):
         self.last_mag_amp = self.ui_mag_amp.text()
         self.last_reg = self.ui_reg_val.text()
 
-
         self.ui_ph0_deg.returnPressed.connect(self.check_val)
         self.ui_ph1_deg.returnPressed.connect(self.check_val)
         self.ui_ph2_deg.returnPressed.connect(self.check_val)
