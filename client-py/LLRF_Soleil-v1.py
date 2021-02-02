@@ -594,8 +594,8 @@ class llrf_graph_window(QtWidgets.QMainWindow):
         if self.bram2.isChecked():
             #self.curve_q2.setData(self.fft_q2)
             #self.curve_i2.setData(self.fft_i2)
-            self.curve_q2.setData(len(self.buf_q[2]), 0)
-            self.curve_i2.setData(len(self.buf_i[2]), 0)
+            self.curve_q2.setData(self.buf_q[2])
+            self.curve_i2.setData(self.buf_i[2])
             self.curve_q2.setPos(len(self.buf_q[2]), 0)
             self.curve_i2.setPos(len(self.buf_i[2]), 0)
 
