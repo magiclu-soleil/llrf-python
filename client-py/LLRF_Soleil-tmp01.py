@@ -146,9 +146,10 @@ class llrf_graph_window(QtWidgets.QMainWindow):
         wb = xlrd.open_workbook(filename=file)
         new_wb = copy(wb)
         try:
-            sheet1 = new_wb.get_sheet(1)
+            sheet1 = new_wb.get_sheet(0)
         except IndexError:
             sheet1 = new_wb.add_sheet('set')
+
         sheet1.write(t, 0, self.server_ip.text())
         sheet1.write(t, 1, self.server_port.text())
         sheet1.write(t, 2, self.ui_ph0_deg.text())
@@ -165,7 +166,7 @@ class llrf_graph_window(QtWidgets.QMainWindow):
     def load_config(self):
         wb = xlrd.open_workbook(filename=file)
         try:
-            sheet1 = wb.sheet_by_index(1)
+            sheet1 = wb.sheet_by_index(0)
             self.server_ip.setText(sheet1.cell_value(t, 0))
             self.server_port.setText(sheet1.cell_value(t, 1))
             self.ui_ph0_deg.setText(sheet1.cell_value(t, 2))
