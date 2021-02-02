@@ -20,10 +20,9 @@ from ctypes import *
 import ctypes
 t = 0  # write/read config from line 0
 n_bit = 4
-
 # for git token
 #  69573290c9e93f4c07ed1b878308ce9bd3a3b418
-
+file = 'config.xlsx'
 class llrf_graph_window(QtWidgets.QMainWindow):
     def __init__(self, *args, **kwargs):
         super(llrf_graph_window, self).__init__(*args, **kwargs)
@@ -144,14 +143,12 @@ class llrf_graph_window(QtWidgets.QMainWindow):
         print(sheet1.row(1)[0].value)
         '''
     def save_config(self):
-        file = self.excel_path.text()
         wb = xlrd.open_workbook(filename=file)
         new_wb = copy(wb)
         try:
             sheet1 = new_wb.get_sheet(1)
         except IndexError:
-            sheet1 = new_wb.add_sheet('config')
-
+            sheet1 = new_wb.add_sheet('set')
         sheet1.write(t, 0, self.server_ip.text())
         sheet1.write(t, 1, self.server_port.text())
         sheet1.write(t, 2, self.ui_ph0_deg.text())
@@ -166,7 +163,6 @@ class llrf_graph_window(QtWidgets.QMainWindow):
         new_wb.save(file)
         self.update_msg('Configuration saved!!!')
     def load_config(self):
-        file = self.excel_path.text()
         wb = xlrd.open_workbook(filename=file)
         try:
             sheet1 = wb.sheet_by_index(1)
@@ -185,8 +181,7 @@ class llrf_graph_window(QtWidgets.QMainWindow):
 
         except IndexError:
             new_wb = copy(wb)
-            sheet1 = new_wb.add_sheet('config')
-
+            sheet1 = new_wb.add_sheet('set')
             sheet1.write(t, 0, self.server_ip.text())
             sheet1.write(t, 1, self.server_port.text())
             sheet1.write(t, 2, self.ui_ph0_deg.text())
@@ -199,7 +194,6 @@ class llrf_graph_window(QtWidgets.QMainWindow):
             sheet1.write(t, 9, self.ui_ph3_add.text())
             sheet1.write(t, 10, self.excel_path.text())
             sheet1.write(t, 11, self.ui_mag_amp.text())
-
             new_wb.save(file)
             self.update_msg('first start')
 
@@ -217,6 +211,7 @@ class llrf_graph_window(QtWidgets.QMainWindow):
         self.ui_mag_amp.returnPressed.connect(self.check_val)
         self.ui_reg_val.returnPressed.connect(self.check_val)
         self.ui_reg_add_2.returnPressed.connect(self.read_reg)
+
     def format_str(self, str):
         i = 0
         index_addr = str.count('') + 1
