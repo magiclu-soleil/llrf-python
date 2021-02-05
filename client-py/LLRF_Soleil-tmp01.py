@@ -253,19 +253,22 @@ class llrf_graph_window(QtWidgets.QMainWindow):
         elif ch == 3:
             phase = self.ui_ph3_deg.text()
             addr = self.ui_ph3_add.text()
-
-        ph = np.float(phase)
-        self.mysocket.send(b"2")
-        ph = c_double(ph)
-        mag_amp = np.float(self.ui_mag_amp.text())
-        mag_amp = c_double(2**mag_amp)
-        print(mag_amp)
-        phase_angle = self.phase_set.IQ_phase_shift(ph,mag_amp)
-        #print(hex(np.uint32(phase_angle)))
-        msg = str(np.uint32(phase_angle)) + ',' + addr
-        self.mysocket.send(msg.encode())
-        # print('Update channel' + str(ch) + 'phase offset')
-        self.update_msg('Now, you are right, the phase updated!!')
+        try:
+            ph = np.float(phase)
+            self.mysocket.send(b"2")
+            ph = c_double(ph)
+            mag_amp = np.float(self.ui_mag_amp.text())
+            mag_amp = c_double(2 ** mag_amp)
+            #print(mag_amp)
+            phase_angle = self.phase_set.IQ_phase_shift(ph, mag_amp)
+            print(addr)
+            msg = str(np.uint32(phase_angle)) + ',' + addr
+            #print(msg)
+            self.mysocket.send(msg.encode())
+            #sprint('Update channel' + str(ch) + 'phase offset')
+            self.update_msg('Now, you are right, the phase updated!!')
+        except ValueError:
+            self.update_msg('You have enter number!!!')
     def user_mode(self):
         '''
         self.bram0_addr.hide()
@@ -318,8 +321,9 @@ class llrf_graph_window(QtWidgets.QMainWindow):
         self.bram1.setChecked(1)
         self.bram2.setChecked(1)
         self.bram3.setChecked(1)
-    def fft_data(self,ch, iq):
-
+        self.bram5.setChecked(1)
+        self.bram6.setChecked(1)
+    def fft_data(self, ch, iq):
         if iq == 'q':
             n = len(self.fft_q[ch])
             fft_q = self.fft_q[ch].np.astype(int)
@@ -356,7 +360,6 @@ class llrf_graph_window(QtWidgets.QMainWindow):
                 self.plt_scatter[i].setSymbolSize(sympole_s)
                 self.polar_plot(self.plt_ch[i])
             i=i+1
-
     def write_reg(self):
         self.mysocket.send(b"3")
         msg = self.ui_reg_val.text() + ',' + self.ui_reg_add.text()
@@ -364,7 +367,7 @@ class llrf_graph_window(QtWidgets.QMainWindow):
         self.update_msg('You write '+ self.ui_reg_val.text() +' to ' + self.ui_reg_add.text())
     def read_reg(self):
         self.mysocket.send(b"4")
-        time.sleep(0.05)
+        time.sleep(0.1)
         self.mysocket.send(self.ui_reg_add_2.text().encode())
         time.sleep(0.05)
         msgServeur = self.mysocket.recv(4096).decode()
@@ -401,7 +404,7 @@ class llrf_graph_window(QtWidgets.QMainWindow):
 
         if (self.last_reg != self.ui_reg_val.text()) & (self.ui_reg_val.text() != ''):
             self.write_reg()
-
+        time.sleep(0.01)
     def update_refresh_time(self):
         try:
             t =int(self.refresh_time.text())
