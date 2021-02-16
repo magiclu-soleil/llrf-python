@@ -2,6 +2,7 @@
 #include <stdint.h>
 #include <math.h>
 
+//  sudo gcc -shared -Wl,-soname,phase_set -o phase_set.so -fPIC phase_set.c
 #define PI 3.14159265
 int32_t IQ_phase_shift(double);
 
