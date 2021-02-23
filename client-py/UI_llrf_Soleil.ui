@@ -284,8 +284,6 @@
       <height>281</height>
      </rect>
     </property>
-    <zorder>horizontalLayoutWidget_2</zorder>
-    <zorder>horizontalLayoutWidget_2</zorder>
    </widget>
    <widget class="QTextEdit" name="current_dt">
     <property name="geometry">
@@ -1752,16 +1750,6 @@
       <string>Ch2 I</string>
      </property>
     </widget>
-    <zorder>txt_nbr_bram_32</zorder>
-    <zorder>txt_nbr_bram_33</zorder>
-    <zorder>tmp_ch3_qmoy</zorder>
-    <zorder>tmp_ch3_imoy</zorder>
-    <zorder>tmp_ch2_qmoy</zorder>
-    <zorder>txt_nbr_bram_35</zorder>
-    <zorder>tmp_ch2_imoy</zorder>
-    <zorder>txt_nbr_bram_34</zorder>
-    <zorder>now</zorder>
-    <zorder>bram0_num_data</zorder>
    </widget>
    <widget class="QPushButton" name="button_expert">
     <property name="geometry">
@@ -2122,7 +2110,7 @@
           </font>
          </property>
          <property name="text">
-          <string> Bram7(*)</string>
+          <string> Bram7(Red)</string>
          </property>
         </widget>
        </item>
@@ -2197,47 +2185,19 @@
      </property>
     </widget>
    </widget>
-   <zorder>label_6</zorder>
-   <zorder>formLayoutWidget</zorder>
-   <zorder>msgbox</zorder>
-   <zorder>splitter</zorder>
-   <zorder>rtplot</zorder>
-   <zorder>current_dt</zorder>
-   <zorder>label_2</zorder>
-   <zorder>plt_ch0_iq</zorder>
-   <zorder>horizontalLayoutWidget</zorder>
-   <zorder>plt_ch1_iq</zorder>
-   <zorder>plt_ch2_iq</zorder>
-   <zorder>plt_ch3_iq</zorder>
-   <zorder>ui_ph0_deg</zorder>
-   <zorder>ui_ph0_add</zorder>
-   <zorder>txt_nbr_bram_3</zorder>
-   <zorder>ui_ph1_add</zorder>
-   <zorder>ui_ph1_deg</zorder>
-   <zorder>ui_ph2_deg</zorder>
-   <zorder>ui_ph2_add</zorder>
-   <zorder>txt_nbr_bram_15</zorder>
-   <zorder>txt_nbr_bram_18</zorder>
-   <zorder>txt_nbr_bram_19</zorder>
-   <zorder>txt_nbr_bram_5</zorder>
-   <zorder>txt_nbr_bram_8</zorder>
-   <zorder>txt_nbr_bram_9</zorder>
-   <zorder>ui_ph3_deg</zorder>
-   <zorder>txt_nbr_bram_17</zorder>
-   <zorder>ui_ph3_add</zorder>
-   <zorder>refresh_time</zorder>
-   <zorder>now_2</zorder>
-   <zorder>groupBox</zorder>
-   <zorder>groupBox_3</zorder>
-   <zorder>groupBox_4</zorder>
-   <zorder>groupBox_5</zorder>
-   <zorder>groupBox_2</zorder>
-   <zorder>groupBox_6</zorder>
-   <zorder>button_expert</zorder>
-   <zorder>groupBox_7</zorder>
-   <zorder>horizontalLayoutWidget_2</zorder>
-   <zorder>verticalLayoutWidget</zorder>
-   <zorder>groupBox_8</zorder>
+   <widget class="QPushButton" name="button_SML01">
+    <property name="geometry">
+     <rect>
+      <x>420</x>
+      <y>260</y>
+      <width>75</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>SML01</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -2245,7 +2205,7 @@
      <x>0</x>
      <y>0</y>
      <width>1785</width>
-     <height>19</height>
+     <height>20</height>
     </rect>
    </property>
   </widget>
