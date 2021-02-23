@@ -1,5 +1,9 @@
 This version is for windows 7 
 date from 23/02/2021
+
+
 Export .exe file from python project 
+
 bug:xlrd can not open the xslx file (IQ18) in windows but on Ubuntu.  
- 
+
+The complie method of C in python program is different to linux.
