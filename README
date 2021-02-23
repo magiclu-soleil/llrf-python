@@ -1,3 +1,5 @@
-This is git for LLRF Soleil python
-second one
-from GitEye
+This version is for windows 7 
+date from 23/02/2021
+Export .exe file from python project 
+bug:xlrd can not open the xslx file (IQ18) in windows but on Ubuntu.  
+ 
